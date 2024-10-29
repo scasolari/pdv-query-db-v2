@@ -1,0 +1,132 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+}
+
+model User {
+  id                          String    @id @default(cuid())
+  name                        String?
+  email                       String?   @unique
+  emailVerified               DateTime?
+  image                       String?
+  stripeCurrentPeriodEnd      DateTime? @map("stripe_current_period_end")
+  stripeCustomerId            String?   @unique @map("stripe_customer_id")
+  stripePriceId               String?   @map("stripe_price_id")
+  stripeSubscriptionId        String?   @unique @map("stripe_subscription_id")
+  stripeCancelledSubscription Boolean?
+  is2FAEnabled                Boolean   @default(false)
+  is2FAActive                 Boolean   @default(false)
+  twoFASecret                 String?   @db.LongText
+  databaseCount               Int       @default(0)
+  Account                     Account[]
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Database {
+  id               String        @id @unique @default(cuid())
+  userId           String
+  name             String        @db.Text
+  settings         String        @db.LongText /// @encrypted
+  isProdDb         Boolean?
+  dbUserPermission String
+  createdAt        DateTime      @default(now())
+  Organization     Organization? @relation(fields: [organizationId], references: [id])
+  organizationId   String?
+
+  @@fulltext([name])
+}
+
+model Backup {
+  id          String   @id @unique @default(cuid())
+  name        String   @db.Text
+  userId      String
+  dataBaseId  String
+  downloadUrl String   @db.Text
+  fileSize    Int
+  expiresIn   Int
+  createdAt   DateTime @default(now())
+
+  @@fulltext([name])
+}
+
+model Query {
+  id        String   @id @unique @default(cuid())
+  userId    String
+  name      String   @db.Text
+  query     Json
+  dbId      String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@fulltext([name])
+}
+
+model Feedback {
+  id        String   @id @unique @default(cuid())
+  userId    String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@fulltext([message])
+}
+
+model Organization {
+  id        String     @id @unique @default(uuid())
+  name      String
+  userId    String
+  email     String
+  createdAt DateTime   @default(now())
+  members   Member[] // Cambia a relazione
+  databases Database[]
+
+  @@fulltext([name])
+}
+
+model Member {
+  id                String       @id @unique @default(uuid())
+  email             String
+  organizationId    String
+  organizationName  String
+  organizationOwner String
+  status            String       @default("pending")
+  createdAt         DateTime     @default(now())
+  Organization      Organization @relation(fields: [organizationId], references: [id])
+
+  @@fulltext([email])
+}
