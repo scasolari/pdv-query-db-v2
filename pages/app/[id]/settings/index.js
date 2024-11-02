@@ -92,13 +92,16 @@ function Settings(props) {
     return <LayoutTopBar title="Settings">
         <div className="sm:w-4/12 flex flex-col gap-5">
             <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                <CardHeader>
-                    <CardTitle className="text-base">
-                        Name
-                    </CardTitle>
-                    <CardDescription>
-                        The name of your workspace.
-                    </CardDescription>
+                <CardHeader className="flex flex-row items-center justify-between">
+                    <div>
+                        <CardTitle className="text-base">
+                            Name
+                        </CardTitle>
+                        <CardDescription >
+                            The name of your workspace.
+                        </CardDescription>
+                    </div>
+                    <OrganizationAvatar profile={organization?.name} size={36}/>
                 </CardHeader>
                 <CardContent>
                     <form className="flex items-center gap-3" onSubmit={updateOrganization}>
@@ -190,6 +193,7 @@ function Settings(props) {
                                     <div className="flex flex-col gap-1">
                                         <Label className="text-sm">Type &quot;delete&quot; to proceed</Label>
                                         <Input
+                                            className="bg-gray-100 dark:bg-gray-100/5 border-0 focus-visible:ring-0 focus:ring-0 shadow-none"
                                             value={deleteText}
                                             onChange={(e) => setDeleteText(e.target.value)}
                                         />

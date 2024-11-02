@@ -42,7 +42,7 @@ function OrganizationAdd(props) {
                 <div className="flex flex-col gap-1 mb-5">
                     <Label className="font-semibold text-sm text-gray-500 dark:text-muted-foreground">Workspace name</Label>
                     <Input
-                        className="bg-gray-100/5 border-0 focus-visible:ring-0"
+                        className="bg-gray-100 dark:bg-gray-100/5 border-0 focus-visible:ring-0 focus:ring-0 shadow-none"
                         required
                         value={form.name}
                         onChange={(e) => setForm({
@@ -52,7 +52,7 @@ function OrganizationAdd(props) {
                     />
                 </div>
                 <div>
-                    <Button type="submit" variant="secondary" className="border shadow-sm">
+                    <Button type="submit" className="border shadow-sm">
                         Create workspace
                     </Button>
                 </div>

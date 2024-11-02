@@ -105,7 +105,7 @@ function AddDatabase(props) {
                     <div className="mb-5">
                         <label className="text-sm mb-1 flex">Database name *</label>
                         <Input
-                            className="bg-gray-100/5 border-0 outline-0 shadow-none border-none focus-visible:ring-0"
+                            className="bg-gray-100 dark:bg-gray-100/5 border-0 focus-visible:ring-0 shadow-none"
                             required={true}
                             disabled={loading}
                             value={form.name}
@@ -144,7 +144,7 @@ function AddDatabase(props) {
                         </div>
                         <div className="flex items-center gap-[15px]">
                             <Input
-                                className="bg-gray-100/5 border-0 focus-visible:ring-0"
+                                className="bg-gray-100 dark:bg-gray-100/5 border-0 focus-visible:ring-0 shadow-none"
                                 required={true}
                                 disabled={loading}
                                 value={form.settings}
@@ -171,7 +171,7 @@ function AddDatabase(props) {
                             })}
                             disabled={loading}
                         >
-                            <SelectTrigger className="bg-gray-100/5 border-0 w-full focus:ring-0">
+                            <SelectTrigger className="bg-gray-100 dark:bg-gray-100/5 border-0 focus-visible:ring-0 focus:ring-0 shadow-none">
                                 <SelectValue placeholder="Select permission..."/>
                             </SelectTrigger>
                             <SelectContent>

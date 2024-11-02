@@ -1,17 +1,25 @@
-import { TbBrandPlanetscale } from "react-icons/tb";
-import { Button } from "@/components/ui/button";
-import { signOut } from "next-auth/react";
+import {TbBrandPlanetscale} from "react-icons/tb";
+import {Button} from "@/components/ui/button";
+import {signOut} from "next-auth/react";
 import {BiCheck, BiExpandVertical, BiPlus} from "react-icons/bi";
 import Link from "next/link";
-import { Badge } from "@/components/ui/badge";
+import {Badge} from "@/components/ui/badge";
 import {
     Popover,
     PopoverContent,
     PopoverTrigger,
 } from "@/components/ui/popover";
-import { Separator } from "@/components/ui/separator";
-import { useRouter } from "next/router";
-import { LuExternalLink } from "react-icons/lu";
+import {Separator} from "@/components/ui/separator";
+import {useRouter} from "next/router";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+
 import {setDatabases, setOrganization, setOrganizations, setProfile} from "@/redux/actions/main";
 import {connect} from "react-redux";
 import OrganizationAvatar from "@/components/organizationAvatar";
@@ -22,13 +30,14 @@ import {
 } from "@/components/ui/dialog"
 import OrganizationAdd from "@/pages/app/organization/add";
 import {BsCheck} from "react-icons/bs";
-import {BookOpen, Database, History, Settings} from "lucide-react";
+import {BookOpen, Database, History, Settings, SettingsIcon} from "lucide-react";
+import {DropdownMenuArrow} from "@radix-ui/react-dropdown-menu";
 
 
 function NavigationTopBar(props) {
-    const { profile, setProfile, setOrganizations, organizations, setOrganization, organization, setDatabases } = props;
+    const {profile, setProfile, setOrganizations, organizations, setOrganization, organization, setDatabases} = props;
     const router = useRouter();
-    const { id } = router.query;
+    const {id} = router.query;
 
     const linkActive = (path) => {
         return router.asPath === path;
@@ -107,7 +116,7 @@ function NavigationTopBar(props) {
                                                      className={`flex items-center justify-between my-0 mx-2 p-2 hover:bg-gray-100/60 rounded-md hover:cursor-pointer dark:hover:bg-gray-100/10 ${router.asPath === `/app/${d.id}/overview` ? `bg-gray-100 dark:bg-gray-100/10` : null}`}>
                                             <div className="flex items-center gap-2">
                                                 <OrganizationAvatar profile={d.name} size={20}/>
-                                                <div className="text-gray-500 dark:text-muted-foreground">
+                                                <div className={`${id === d.id ? "!text-white" : ""} text-gray-500 dark:text-muted-foreground`}>
                                                     {d.name}
                                                 </div>
                                             </div>
@@ -121,85 +130,35 @@ function NavigationTopBar(props) {
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center">
-                        <Popover>
-                            <PopoverTrigger>
-                                <OrganizationAvatar size={36} profile={profile?.user?.name}/>
-                            </PopoverTrigger>
-                            <PopoverContent className="p-0 mt-1" side="bottom" align="end">
-                                <div className="py-5 flex-col items-center">
-                                    <div className="flex flex-col items-center content-center gap-3 w-full">
-                                        <OrganizationAvatar size={88} profile={profile?.user?.name}/>
-                                        <div className="flex justify-center items-center gap-3">
-                                            <h2 className="text-lg font-semibold">
-                                                {profile?.user?.name}
-                                            </h2>
-                                            <Badge
-                                                className="rounded-full !bg-gray-200 !text-black shadow-none">Free</Badge>
-                                        </div>
-                                        <div className="flex items-center justify-center gap-3 w-full">
-                                            <Button
-                                                className="bg-white border-2 border-green-600 rounded-full text-green-600 shadow-none hover:bg-green-600 hover:text-white font-semibold dark:bg-transparent dark:hover:bg-green-600">
-                                                Subscribe to Pro (€2.99/m)
-                                            </Button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mb-1">
-                                    <ul className="p-2">
-                                        <li className="rounded-md px-3 flex items-center justify-between hover:bg-gray-100/60 dark:hover:bg-gray-100/10">
-                                            <Link href="/app/databases"
-                                                  className="py-2 hover:text-black dark:hover:text-white w-full">
-                                                Databases
-                                            </Link>
-                                            <Link href="/app/databases/add"
-                                                  className="py-2 text-gray-500 dark:text-muted-foreground hover:text-black dark:hover:text-white">
-                                                <BiPlus size={18}/>
-                                            </Link>
-                                        </li>
-                                        <li className="rounded-md px-3 flex items-center justify-between hover:bg-gray-100/60 dark:hover:bg-gray-100/10">
-                                            <Link href="/app/backups"
-                                                  className="py-2 hover:text-black dark:hover:text-white w-full">
-                                                Backups
-                                            </Link>
-                                            <Link href="/app/backups/add"
-                                                  className="py-2 text-gray-500 dark:text-muted-foreground hover:text-black dark:hover:text-white">
-                                                <BiPlus size={18}/>
-                                            </Link>
-                                        </li>
-                                        <li className="rounded-md px-3 flex items-center justify-between hover:bg-gray-100/60 dark:hover:bg-gray-100/10">
-                                            <Link href="/app/feedback"
-                                                  className="py-2 hover:text-black dark:hover:text-white w-full">
-                                                Feedback
-                                            </Link>
-                                            <LuExternalLink size={18}/>
-                                        </li>
-                                        <li className="rounded-md px-3 flex items-center justify-between hover:bg-gray-100/60 dark:hover:bg-gray-100/10">
-                                            <Link href="/app/docs"
-                                                  className="py-2 hover:text-black dark:hover:text-white w-full">
-                                                Docs
-                                            </Link>
-                                            <LuExternalLink size={18}/>
-                                        </li>
-                                        <li className="rounded-md px-3 flex items-center justify-between hover:bg-gray-100/60 dark:hover:bg-gray-100/10">
-                                            <div
-                                                className="py-2 hover:text-black dark:hover:text-white w-full hover:cursor-pointer"
-                                                onClick={() => {
-                                                    setProfile(null)
-                                                    setOrganization(null)
-                                                    setOrganizations([])
-                                                    setDatabases([])
-                                                    sessionStorage.removeItem("persist:root")
-                                                    signOut({callbackUrl: "/"})
-                                                        .then(() => {
-                                                        })
-                                                }}>
-                                                Sign out
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </PopoverContent>
-                        </Popover>
+                        <DropdownMenu>
+                            <DropdownMenuTrigger>
+                                <OrganizationAvatar profile={profile?.user?.name} size={36}/>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent side="bottom" align="end" className="mt-1 w-[240px]">
+                                <DropdownMenuItem>
+                                    <Link href="/app/settings" className="w-full flex items-center gap-2"
+                                          onClick={() => setOrganization(null)}>
+                                        Settings
+                                    </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="hover:cursor-pointer"
+                                    onClick={() => {
+                                        setProfile(null)
+                                        setOrganization(null)
+                                        setOrganizations([])
+                                        setDatabases([])
+                                        sessionStorage.removeItem("persist:root")
+                                        signOut({callbackUrl: "/"})
+                                            .then(() => {
+                                            })
+                                    }}
+                                >
+                                    Logout
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+
                     </div>
                 </div>
             </div>
