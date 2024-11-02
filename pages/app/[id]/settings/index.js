@@ -93,10 +93,10 @@ function Settings(props) {
         <div className="sm:w-4/12 flex flex-col gap-5">
             <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
                 <CardHeader>
-                    <CardTitle className="text-lg">
+                    <CardTitle className="text-base">
                         Name
                     </CardTitle>
-                    <CardDescription className="text-base">
+                    <CardDescription>
                         The name of your workspace.
                     </CardDescription>
                 </CardHeader>
@@ -113,10 +113,10 @@ function Settings(props) {
             </Card>
             <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
                 <CardHeader>
-                    <CardTitle className="text-lg">
+                    <CardTitle className="text-base">
                         Members
                     </CardTitle>
-                    <CardDescription className="text-base">
+                    <CardDescription>
                         Workspace members can collaborate on the projects owned by this workspace. They can
                         create, delete, and modify projects, and can invite or remove other members.
                     </CardDescription>
@@ -159,10 +159,10 @@ function Settings(props) {
             {profile?.user?.email === organization?.organizationOwner
                 ? <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
                     <CardHeader>
-                        <CardTitle className="text-lg">
+                        <CardTitle className="text-base">
                             Danger zone
                         </CardTitle>
-                        <CardDescription className="text-base">
+                        <CardDescription>
                             Delete the workspace <span
                             className="font-semibold text-black dark:text-white">{organization?.name}</span>, and all of
                             its associated settings.

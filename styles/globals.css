@@ -82,11 +82,11 @@
   body {
     @apply bg-background text-foreground;
     font-weight: 500!important;
-    font-size: 14px!important;
+    font-size: 12px!important;
   }
 }
 
-input, textarea, button {
-  font-weight: 500!important;
-  font-size: 14px!important;
+input, textarea, button, label, select {
+  font-weight: 600!important;
+  font-size: 12px!important;
 }

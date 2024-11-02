@@ -51,7 +51,7 @@ function NavigationTopBar(props) {
                         <Popover>
                             <PopoverTrigger>
                                 <Button
-                                    className="w-full flex items-center gap-2 justify-between border bg-gray-100/60 dark:bg-gray-100/10 dark:border-gray-800 dark:hover:bg-gray-100/15 dark:hover:border-gray-700"
+                                    className="border"
                                     variant="secondary">
                                     <div className="flex items-center gap-2">
                                         {organization?.name === undefined
@@ -73,7 +73,7 @@ function NavigationTopBar(props) {
                                     className="flex items-center justify-between m-2 p-2 hover:bg-gray-100 hover:cursor-pointer rounded-md dark:hover:bg-gray-100/10">
                                     <Link onClick={() => setOrganization(null)} href="/app/overview"
                                           className="flex items-center gap-2">
-                                        <OrganizationAvatar size={24} profile={profile?.user?.name}/>
+                                        <OrganizationAvatar size={20} profile={profile?.user?.name}/>
                                         <div className="flex items-center gap-2">
                                             <span className="font-[600]">{profile?.user?.name}</span>
                                             <Badge
@@ -84,7 +84,7 @@ function NavigationTopBar(props) {
                                 </div>
                                 <Separator/>
                                 <div className="flex items-center justify-between m-2 p-2">
-                                    <div className="text-sm text-gray-500 dark:text-muted-foreground">Workspaces</div>
+                                    <div className="text-gray-500 dark:text-muted-foreground">Workspaces</div>
                                     <Dialog>
                                         <DialogTrigger>
                                             <BiPlus
@@ -106,8 +106,8 @@ function NavigationTopBar(props) {
                                         })} href={`/app/${d.id}/overview`} key={i}
                                                      className={`flex items-center justify-between my-0 mx-2 p-2 hover:bg-gray-100/60 rounded-md hover:cursor-pointer dark:hover:bg-gray-100/10 ${router.asPath === `/app/${d.id}/overview` ? `bg-gray-100 dark:bg-gray-100/10` : null}`}>
                                             <div className="flex items-center gap-2">
-                                                <OrganizationAvatar profile={d.name}/>
-                                                <div className="text-sm text-gray-500 dark:text-muted-foreground">
+                                                <OrganizationAvatar profile={d.name} size={20}/>
+                                                <div className="text-gray-500 dark:text-muted-foreground">
                                                     {d.name}
                                                 </div>
                                             </div>
@@ -138,7 +138,7 @@ function NavigationTopBar(props) {
                                         </div>
                                         <div className="flex items-center justify-center gap-3 w-full">
                                             <Button
-                                                className="bg-white border-2 border-green-600 rounded-md text-green-600 shadow-none hover:bg-green-600 hover:text-white font-semibold dark:bg-transparent dark:hover:bg-green-600">
+                                                className="bg-white border-2 border-green-600 rounded-full text-green-600 shadow-none hover:bg-green-600 hover:text-white font-semibold dark:bg-transparent dark:hover:bg-green-600">
                                                 Subscribe to Pro (€2.99/m)
                                             </Button>
                                         </div>

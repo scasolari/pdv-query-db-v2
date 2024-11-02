@@ -48,10 +48,10 @@ function Settings(props) {
             <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <div>
-                        <CardTitle className="text-lg">
+                        <CardTitle className="text-base">
                             Public profile
                         </CardTitle>
-                        <CardDescription className="text-base">
+                        <CardDescription >
                             Your personal account.
                         </CardDescription>
                     </div>
@@ -88,10 +88,10 @@ function Settings(props) {
             </Card>
             <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
                 <CardHeader>
-                    <CardTitle className="text-lg">
+                    <CardTitle className="text-base">
                     Workspaces
                     </CardTitle>
-                    <CardDescription className="text-base">
+                    <CardDescription>
                         Workspace members can collaborate on the projects owned by this workspace. They can create, delete, and modify projects, and can invite or remove other members.
                     </CardDescription>
                 </CardHeader>
@@ -119,7 +119,7 @@ function Settings(props) {
                                     </div>
                                 })}
                             </div>
-                            : <p className="text-muted-foreground">No workspaces invited.</p>
+                            : <p className="text-muted-foreground py-3">No workspaces invited.</p>
                         }
                     </div>
                     <div>
@@ -151,17 +151,17 @@ function Settings(props) {
                                     </div>
                                 })}
                             </div>
-                            : <p className="text-muted-foreground">No workspaces joined.</p>
+                            : <p className="text-muted-foreground py-3">No workspaces joined.</p>
                         }
                     </div>
                 </CardContent>
             </Card>
             <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
                 <CardHeader>
-                    <CardTitle className="text-lg">
+                    <CardTitle className="text-base">
                         Danger zone
                     </CardTitle>
-                    <CardDescription className="text-base">
+                    <CardDescription>
                         Delete account, and all of
                         its associated settings.
                     </CardDescription>

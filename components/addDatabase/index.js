@@ -93,7 +93,7 @@ function AddDatabase(props) {
     return <>
         <Dialog open={open} onOpenChange={resetDialog}>
             <DialogTrigger>
-                <Button className="border" variant="secondary" onClick={() => setOpen(true)}>
+                <Button className="border" onClick={() => setOpen(true)}>
                     <Link/> Link Database
                 </Button>
             </DialogTrigger>
@@ -105,6 +105,7 @@ function AddDatabase(props) {
                     <div className="mb-5">
                         <label className="text-sm mb-1 flex">Database name *</label>
                         <Input
+                            className="bg-gray-100/5 border-0 outline-0 shadow-none border-none focus-visible:ring-0"
                             required={true}
                             disabled={loading}
                             value={form.name}
@@ -134,7 +135,7 @@ function AddDatabase(props) {
                                 <div>
                                     <Button className="p-0 mb-1 h-auto" type="button" variant="text"
                                             onClick={() => testDbConnection()}>
-                                            <span className="text-sm font-normal">
+                                            <span>
                                                 Test connection
                                             </span>
                                     </Button>
@@ -143,6 +144,7 @@ function AddDatabase(props) {
                         </div>
                         <div className="flex items-center gap-[15px]">
                             <Input
+                                className="bg-gray-100/5 border-0 focus-visible:ring-0"
                                 required={true}
                                 disabled={loading}
                                 value={form.settings}
@@ -161,11 +163,15 @@ function AddDatabase(props) {
                     </div>
                     <div className="mb-5">
                         <label className="text-sm mb-1 flex">Database user permission *</label>
-                        <Select required onValueChange={(e) => setForm({
-                            ...form,
-                            dbUserPermission: e
-                        })} disabled={loading}>
-                            <SelectTrigger className="w-full">
+                        <Select
+                            required
+                            onValueChange={(e) => setForm({
+                                ...form,
+                                dbUserPermission: e
+                            })}
+                            disabled={loading}
+                        >
+                            <SelectTrigger className="bg-gray-100/5 border-0 w-full focus:ring-0">
                                 <SelectValue placeholder="Select permission..."/>
                             </SelectTrigger>
                             <SelectContent>

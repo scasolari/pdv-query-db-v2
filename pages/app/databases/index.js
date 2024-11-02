@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Badge } from "@/components/ui/badge";
 import moment from "moment";
-import { MoreHorizontal } from "lucide-react";
+import {Code, MoreHorizontal, Trash2} from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -84,13 +84,18 @@ function Databases(props) {
                                             <DropdownMenuTrigger>
                                                 <MoreHorizontal
                                                     size={16}
-                                                    data-slot="action"
-                                                    className="hidden mr-2 group-hover:flex absolute right-0 top-1/2 transform -translate-y-1/2"
+                                                    className="mr-6"
                                                 />
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent>
-                                                <DropdownMenuItem>Console</DropdownMenuItem>
-                                                <DropdownMenuItem>Delete</DropdownMenuItem>
+                                            <DropdownMenuContent side="left" align="start">
+                                                <DropdownMenuItem>
+                                                    <Code/>
+                                                    Console
+                                                </DropdownMenuItem>
+                                                <DropdownMenuItem>
+                                                    <Trash2/>
+                                                    Delete
+                                                </DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
                                     </div>
