@@ -146,7 +146,7 @@ function Settings(props) {
                                                     you
                                                 </Badge>
                                                 : <Badge variant="secondary"
-                                                         className="border border-gray-200 dark:border-gray-100/10">
+                                                         className="border border-gray-200 dark:border-gray-100/10 capitalize">
                                                     {d.status}
                                                 </Badge>
                                             }

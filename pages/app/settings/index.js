@@ -61,27 +61,15 @@ function Settings(props) {
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                             <Label className="w-20">Name</Label>
-                            <Input
-                                readOnly
-                                className="bg-white dark:bg-black/40 shadow-none"
-                                value={profile?.user?.name}
-                            />
+                            {profile?.user?.name}
                         </div>
                         <div className="flex items-center gap-3">
                             <Label className="w-20">Email</Label>
-                            <Input
-                                readOnly
-                                className="bg-white dark:bg-black/40 shadow-none"
-                                value={profile?.user?.email}
-                            />
+                            {profile?.user?.email}
                         </div>
                         <div className="flex items-center gap-3">
                             <Label className="w-20">Provider</Label>
-                            <Input
-                                readOnly
-                                className="bg-white dark:bg-black/40 shadow-none"
-                                value={profile?.user?.provider}
-                            />
+                            {profile?.user?.provider}
                         </div>
                     </div>
                 </CardContent>

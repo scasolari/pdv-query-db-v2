@@ -48,7 +48,7 @@ function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, 
     return <div>
         <Toaster position="top-center" richColors />
         <NavigationTopBar profile={session}/>
-        <div className="w-full px-6 lt-md:!px-4 mb-10">
+        <div className={`${router.pathname === "/app/databases" ? "w-[1110px]" : "w-full"} px-6 lt-md:!px-4 mb-10`}>
             <div className="mb-6 pt-3">
                 <h1 className="text-lg font-semibold ">{title}</h1>
             </div>

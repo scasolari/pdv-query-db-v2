@@ -176,7 +176,7 @@ function AddDatabase(props) {
                             </SelectTrigger>
                             <SelectContent>
                                 {dataPermissions?.map(d => {
-                                    return <SelectItem key={d.id} value={d.value}>{d.label}</SelectItem>
+                                    return <SelectItem key={d.id} value={d.value} className="text-[12px] hover:cursor-pointer">{d.label}</SelectItem>
                                 })}
                             </SelectContent>
                         </Select>

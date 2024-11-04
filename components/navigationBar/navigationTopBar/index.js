@@ -15,11 +15,8 @@ import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
 import {setDatabases, setOrganization, setOrganizations, setProfile} from "@/redux/actions/main";
 import {connect} from "react-redux";
 import OrganizationAvatar from "@/components/organizationAvatar";
@@ -31,13 +28,14 @@ import {
 import OrganizationAdd from "@/pages/app/organization/add";
 import {BsCheck} from "react-icons/bs";
 import {BookOpen, Database, History, Settings, SettingsIcon} from "lucide-react";
-import {DropdownMenuArrow} from "@radix-ui/react-dropdown-menu";
+import {useTheme} from "next-themes";
 
 
 function NavigationTopBar(props) {
     const {profile, setProfile, setOrganizations, organizations, setOrganization, organization, setDatabases} = props;
     const router = useRouter();
     const {id} = router.query;
+    const {theme, setTheme} = useTheme()
 
     const linkActive = (path) => {
         return router.asPath === path;
@@ -116,7 +114,7 @@ function NavigationTopBar(props) {
                                                      className={`flex items-center justify-between my-0 mx-2 p-2 hover:bg-gray-100/60 rounded-md hover:cursor-pointer dark:hover:bg-gray-100/10 ${router.asPath === `/app/${d.id}/overview` ? `bg-gray-100 dark:bg-gray-100/10` : null}`}>
                                             <div className="flex items-center gap-2">
                                                 <OrganizationAvatar profile={d.name} size={20}/>
-                                                <div className={`${id === d.id ? "!text-white" : ""} text-gray-500 dark:text-muted-foreground`}>
+                                                <div className={`${id === d.id ? "dark:!text-white !text-black" : ""} text-gray-500 dark:text-muted-foreground`}>
                                                     {d.name}
                                                 </div>
                                             </div>
@@ -140,6 +138,12 @@ function NavigationTopBar(props) {
                                           onClick={() => setOrganization(null)}>
                                         Settings
                                     </Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem
+                                    className="capitalize hover:cursor-pointer"
+                                    onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+                                >
+                                    {theme === "dark" ? "Light" : "Dark"}
                                 </DropdownMenuItem>
                                 <DropdownMenuItem
                                     className="hover:cursor-pointer"

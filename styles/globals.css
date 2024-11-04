@@ -86,7 +86,7 @@
   }
 }
 
-input, textarea, button, label, select {
+input, textarea, button, label, select, option, form {
   font-weight: 600!important;
   font-size: 12px!important;
 }
