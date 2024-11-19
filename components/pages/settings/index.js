@@ -21,8 +21,9 @@ import {
 import {DialogBody} from "next/dist/client/components/react-dev-overlay/internal/components/Dialog";
 import {Label} from "@/components/ui/label";
 
-function Settings(props) {
+function PageSettings(props) {
     const router = useRouter()
+    const {id} = router.query
     const {profile, organization, setOrganization} = props
     const [name, setName] = useState(organization?.name);
     const [email, setEmail] = useState("");
@@ -73,7 +74,8 @@ function Settings(props) {
     useEffect(() => {
         fetchInvitations()
         fetchMembers()
-    }, []);
+        console.log("Page ID: ", id)
+    }, [router.query, id]);
     const updateOrganization = (e) => {
         e.preventDefault()
         axios.post(`/api/organization/${organization?.id}`, {
@@ -183,24 +185,24 @@ function Settings(props) {
                             </DialogTrigger>
                             <DialogContent>
                                 <DialogHeader>
-                                    <DialogTitle>Are you absolutely sure?</DialogTitle>
-                                    <DialogDescription>
+                                    <DialogTitle className="text-base">Are you absolutely sure?</DialogTitle>
+                                    <DialogDescription className="text-sm">
                                         This action cannot be undone. This will permanently delete your workspace
-                                        and remove your data from our servers.
+                                        &quot;{organization?.name}&quot; and remove your data from our servers.
                                     </DialogDescription>
                                 </DialogHeader>
                                 <DialogBody className="flex flex-col gap-3">
                                     <div className="flex flex-col gap-1">
-                                        <Label className="text-sm">Type &quot;delete&quot; to proceed</Label>
                                         <Input
+                                            placeholder={`Type "${organization?.name}" to proceed`}
                                             className="bg-gray-100 dark:bg-gray-100/5 border-0 focus-visible:ring-0 focus:ring-0 shadow-none"
                                             value={deleteText}
                                             onChange={(e) => setDeleteText(e.target.value)}
                                         />
                                     </div>
                                     <Button
-                                        disabled={deleteText !== "delete"}
-                                        onClick={() => deleteText === "delete" ? deleteOrganization() : null}
+                                        disabled={deleteText !== organization?.name}
+                                        onClick={() => deleteText === organization?.name ? deleteOrganization() : null}
                                         className="w-fit border border-red-600 text-white hover:bg-red-600 hover:text-white"
                                         type="submit"
                                         variant="destructive">
@@ -229,4 +231,4 @@ const mapDispatchToProps = {
     setOrganization,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Settings);
+export default connect(mapStateToProps, mapDispatchToProps)(PageSettings);

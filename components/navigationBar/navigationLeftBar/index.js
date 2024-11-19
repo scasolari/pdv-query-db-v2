@@ -28,7 +28,7 @@ function NavigationBar(props) {
     if (!session) return null;
 
     return (
-        <div className="fixed top-0 left-0 bottom-0 border-r">
+        <div className="fixed top-[68px] left-0 bottom-0 border-r">
             <div className="flex justify-center items-center h-16">
                 <DropdownMenu>
                     <DropdownMenuTrigger>

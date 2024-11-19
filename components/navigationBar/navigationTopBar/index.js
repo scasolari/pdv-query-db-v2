@@ -46,7 +46,7 @@ function NavigationTopBar(props) {
 
     return <>
         <div
-            className="sticky top-0 py-4 pb-0 mb-4 sm:border-none border-b border-gray-100 dark:border-gray-100/10 bg-white bg-opacity-0 backdrop-blur-lg">
+            className="sticky top-0 py-4 pb-4 border-b mb-4 dark:border-gray-100/10 bg-white bg-opacity-0 backdrop-blur-lg">
             <div className="flex items-center w-full justify-between px-6">
                 <div className="flex items-center gap-3">
                     <div>
@@ -59,7 +59,7 @@ function NavigationTopBar(props) {
                             <PopoverTrigger>
                                 <Button
                                     className="border"
-                                    variant="secondary">
+                                    variant="outline">
                                     <div className="flex items-center gap-2">
                                         {organization?.name === undefined
                                             ? <OrganizationAvatar size={24} profile={profile?.user?.name}/>
@@ -69,7 +69,7 @@ function NavigationTopBar(props) {
                                             <span
                                                 className="truncate">{organization?.name || profile?.user?.name}</span>
                                             <Badge
-                                                className="rounded-full !bg-gray-200 !text-black shadow-none">Free</Badge>
+                                                className="rounded-full !bg-gray-200 !text-black text-xs shadow-none">Free</Badge>
                                         </div>
                                     </div>
                                     <BiExpandVertical/>
@@ -110,7 +110,7 @@ function NavigationTopBar(props) {
                                             id: d.id,
                                             name: d.name,
                                             organizationOwner: d.email,
-                                        })} href={`/app/${d.id}/overview`} key={i}
+                                        })} href={`/app/${d.id}`} key={i}
                                                      className={`flex items-center justify-between my-0 mx-2 p-2 hover:bg-gray-100/60 rounded-md hover:cursor-pointer dark:hover:bg-gray-100/10 ${router.asPath === `/app/${d.id}/overview` ? `bg-gray-100 dark:bg-gray-100/10` : null}`}>
                                             <div className="flex items-center gap-2">
                                                 <OrganizationAvatar profile={d.name} size={20}/>
@@ -158,7 +158,7 @@ function NavigationTopBar(props) {
                                             })
                                     }}
                                 >
-                                    Logout
+                                    Sign-out
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>
@@ -166,7 +166,7 @@ function NavigationTopBar(props) {
                     </div>
                 </div>
             </div>
-            <div
+            {/*<div
                 className="hidden sm:block px-6 pb-2 border-b mt-5">
                 <ul className="h6 flex items-center gap-2">
                     <li>
@@ -218,7 +218,7 @@ function NavigationTopBar(props) {
                         </Link>
                     </li>
                 </ul>
-            </div>
+            </div>*/}
         </div>
     </>
 }

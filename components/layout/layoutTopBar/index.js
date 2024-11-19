@@ -7,6 +7,7 @@ import axios from "axios";
 import {useRouter} from "next/router";
 import { Toaster } from "@/components/ui/sonner"
 import PostHog from 'posthog-js';
+import NavigationBar from "@/components/navigationBar/navigationLeftBar";
 
 function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, setDatabases }) {
     const { data: session } = useSession();
@@ -24,26 +25,8 @@ function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, 
     useEffect(() => {
         fetchOrganizations()
         fetchDatabases()
-        setProfile(session);
-        PostHog.init('phc_PbUZ5Ig27JPfOiqhlhc9k8OIzJShrncjgGWKTCsAk2p', {
-            api_host: 'https://eu.i.posthog.com',
-            person_profiles: 'always'
-        });
-
-        PostHog.identify(profile?.user?.id);
-        // Funzione per gestire il cambiamento della rotta
-        const handleRouteChange = (url) => {
-            PostHog.capture('pageview', { url });
-        };
-
-        // Aggiungi un listener per il cambiamento della rotta
-        router.events.on('routeChangeComplete', handleRouteChange);
-
-        // Pulire il listener quando il componente viene smontato
-        return () => {
-            router.events.off('routeChangeComplete', handleRouteChange);
-        };
-    }, [session, profile, setProfile, router.events]);
+        setProfile(session)
+    }, [session]);
     if (!session) return null;
     return <div>
         <Toaster position="top-center" richColors />

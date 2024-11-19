@@ -14,9 +14,7 @@ function Databases(props) {
             <div class="mb-3">
                 <AddDatabase />
             </div>
-            <Suspense>
-                <DataTable columns={columns} data={databases}/>
-            </Suspense>
+
         </LayoutTopBar>
     );
 }

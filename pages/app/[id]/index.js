@@ -1,22 +1,17 @@
 import LayoutTopBar from "@/components/layout/layoutTopBar";
-import {setProfile} from "@/redux/actions/main";
 import {connect} from "react-redux";
 
-function Overview(props) {
-    const {profile, organization} = props
+function App(props) {
+    const {organization} = props
     return <LayoutTopBar title={organization?.name}>
+        <div>Overview</div>
     </LayoutTopBar>
 }
 
 const mapStateToProps = (state) => {
     return {
-        profile: state.profile.profile,
         organization: state.organization.organization,
     };
 };
 
-const mapDispatchToProps = {
-    setProfile,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Overview);
+export default connect(mapStateToProps, null)(App);

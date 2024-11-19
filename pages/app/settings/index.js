@@ -60,8 +60,14 @@ function Settings(props) {
                 <CardContent>
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
-                            <Label className="w-20">Name</Label>
-                            {profile?.user?.name}
+                            <Input
+                                className="bg-white dark:bg-black/40 shadow-none"
+                                value={profile?.user?.name}
+                            />
+                            <Button
+                                type="submit"
+                                className="bg-gray-100 hover:bg-gray-200/70 shadow-none border hover:border-gray-300 w-fit dark:bg-gray-100/10  dark:border-gray-100/10 dark:hover:bg-gray-100/15"
+                                variant="secondary">Save</Button>
                         </div>
                         <div className="flex items-center gap-3">
                             <Label className="w-20">Email</Label>

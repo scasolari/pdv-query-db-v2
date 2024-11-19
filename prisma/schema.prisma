@@ -114,6 +114,7 @@ model Organization {
   createdAt DateTime   @default(now())
   members   Member[] // Cambia a relazione
   databases Database[]
+  Event     Event[]
 
   @@fulltext([name])
 }
@@ -129,4 +130,13 @@ model Member {
   Organization      Organization @relation(fields: [organizationId], references: [id])
 
   @@fulltext([email])
+}
+
+model Event {
+  id             String       @id @unique @default(cuid())
+  event_name     String?      @default("page_view")
+  user_id        String?      @default(uuid())
+  organizationId String
+  createdAt      String
+  Organization   Organization @relation(fields: [organizationId], references: [id])
 }

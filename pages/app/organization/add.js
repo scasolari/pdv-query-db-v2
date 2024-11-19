@@ -23,7 +23,7 @@ function OrganizationAdd(props) {
                     name: res.data.name,
                     organizationOwner: res.data.email,
                 })
-                router.push(`/app/${res.data.id}/overview`);
+                router.push(`/app/${res.data.id}`);
             })
     }
     useEffect(() => {
