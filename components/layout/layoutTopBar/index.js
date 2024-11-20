@@ -1,6 +1,6 @@
 import NavigationTopBar from "@/components/navigationBar/navigationTopBar";
 import {useSession} from "next-auth/react";
-import {setDatabases, setOrganization, setOrganizations, setProfile} from "@/redux/actions/main";
+import {setDatabases, setOrganization, setOrganizations, setPendingInvitation, setProfile} from "@/redux/actions/main";
 import {connect} from "react-redux";
 import {useEffect} from "react";
 import axios from "axios";
@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/sonner"
 import PostHog from 'posthog-js';
 import NavigationBar from "@/components/navigationBar/navigationLeftBar";
 
-function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, setDatabases }) {
+function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, setDatabases, setPendingInvitation }) {
     const { data: session } = useSession();
     const router = useRouter();
     const fetchOrganizations = () => {
@@ -22,9 +22,16 @@ function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, 
             setDatabases(response.data);
         })
     }
+    const fetchPendingInvitation = () => {
+        axios.post(`/api/invitation`, {email: profile?.user?.email})
+            .then((res) => {
+                setPendingInvitation(res.data);
+            })
+    }
     useEffect(() => {
         fetchOrganizations()
         fetchDatabases()
+        fetchPendingInvitation()
         setProfile(session)
     }, [session]);
     if (!session) return null;
@@ -47,6 +54,7 @@ const mapStateToProps = (state) => {
         profile: state.profile.profile,
         organization: state.organization.organization,
         organizations: state.organizations.organizations,
+        pending_invitation: state.pending_invitation.pending_invitation
     };
 };
 
@@ -55,6 +63,7 @@ const mapDispatchToProps = {
     setOrganization,
     setOrganizations,
     setDatabases,
+    setPendingInvitation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LayoutTopBar);

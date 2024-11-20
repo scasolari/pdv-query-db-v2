@@ -34,3 +34,10 @@ export const setDatabase = (database) => dispatch => {
         payload: database
     });
 }
+
+export const setPendingInvitation = (pending_invitation) => dispatch => {
+    dispatch({
+        type: t.SET_PENDING_INVITATION,
+        payload: pending_invitation
+    });
+}

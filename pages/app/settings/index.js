@@ -5,7 +5,7 @@ import {connect} from "react-redux";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import OrganizationAvatar from "@/components/organizationAvatar";
 import { toast } from "sonner"
-import {setOrganization, setOrganizations} from "@/redux/actions/main";
+import {setOrganization, setOrganizations, setPendingInvitation} from "@/redux/actions/main";
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Input} from "@/components/ui/input";
@@ -17,47 +17,38 @@ import {
 } from "@/components/ui/avatar"
 
 function Settings(props) {
-    const {profile, organizations, setOrganizations, setOrganization} = props
+    const {profile, organizations, setOrganizations, setOrganization, pending_invitation, setPendingInvitation} = props
     const [invitations, setInvitations] = useState([]);
     const fetchOrganizations = () => {
         axios.get("/api/organization").then((response) => {
             setOrganizations(response.data);
         })
     }
-    useEffect(() => {
-        fetchInvitations()
-    }, []);
-    const fetchInvitations = () => {
-        axios.post(`/api/invitation`, {email: profile?.user?.email})
-            .then((res) => {
-                setInvitations(res.data)
-            })
-    }
     const acceptInvitation = (id) => {
         axios.post(`/api/invitation/add`, {id: id})
             .then(() => {
-                fetchInvitations()
+                setPendingInvitation([])
                 fetchOrganizations()
             })
             .catch((err) => {
                 toast.error(err.response.data.message)
             })
     }
-    return <LayoutTopBar title="Settings">
-        <div className="sm:w-4/12 flex flex-col gap-5">
-            <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                <CardHeader className="flex flex-row items-center justify-between">
+    return <LayoutTopBar>
+        <div className="sm:w-4/12 m-auto flex flex-col gap-5">
+            <Card className="border-none shadow-none">
+                <CardHeader className="px-0 pt-0 flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-base">
                             Public profile
                         </CardTitle>
-                        <CardDescription >
+                        <CardDescription>
                             Your personal account.
                         </CardDescription>
                     </div>
                     <OrganizationAvatar profile={profile?.user?.name} size={36}/>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-0">
                     <div className="flex flex-col gap-3">
                         <div className="flex items-center gap-3">
                             <Input
@@ -80,21 +71,22 @@ function Settings(props) {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                <CardHeader>
+            <Card className="border-none shadow-none">
+                <CardHeader className="px-0 pt-0">
                     <CardTitle className="text-base">
-                    Workspaces
+                        Workspaces
                     </CardTitle>
                     <CardDescription>
-                        Workspace members can collaborate on the projects owned by this workspace. They can create, delete, and modify projects, and can invite or remove other members.
+                        Workspace members can collaborate on the projects owned by this workspace. They can create,
+                        delete, and modify projects, and can invite or remove other members.
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-5">
+                <CardContent className="flex flex-col gap-5 px-0">
                     <div>
                         <p className="font-semibold">Pending invitation</p>
-                        {invitations?.length > 0
+                        {pending_invitation?.length > 0
                             ? <div className={`flex flex-col gap-3 mt-3`}>
-                                {invitations?.map((d, i) => {
+                                {pending_invitation?.map((d, i) => {
                                     return <div key={i} className="flex items-center justify-between">
                                         <div className="flex items-center gap-3">
                                             <OrganizationAvatar profile={d.organizationName} size={20}/>
@@ -150,8 +142,8 @@ function Settings(props) {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                <CardHeader>
+            <Card className="border-none shadow-none">
+                <CardHeader className="px-0 pt-0">
                     <CardTitle className="text-base">
                         Danger zone
                     </CardTitle>
@@ -160,7 +152,7 @@ function Settings(props) {
                         its associated settings.
                     </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-0">
                     <form className="flex items-center gap-3">
                         <Button
                             className="bg-transparent border border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
@@ -179,13 +171,15 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profile.profile,
         organizations: state.organizations.organizations,
-        organization: state.organization.organization
+        organization: state.organization.organization,
+        pending_invitation: state.pending_invitation.pending_invitation
     };
 };
 
 const mapDispatchToProps = {
     setOrganizations,
-    setOrganization
+    setOrganization,
+    setPendingInvitation
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Settings);

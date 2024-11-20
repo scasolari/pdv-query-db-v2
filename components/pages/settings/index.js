@@ -93,8 +93,8 @@ function PageSettings(props) {
     }
     return <LayoutTopBar title="Settings">
         <div className="sm:w-4/12 flex flex-col gap-5">
-            <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                <CardHeader className="flex flex-row items-center justify-between">
+            <Card className="border-none shadow-none">
+                <CardHeader className="px-0 pt-0 flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-base">
                             Name
@@ -105,7 +105,7 @@ function PageSettings(props) {
                     </div>
                     <OrganizationAvatar profile={organization?.name} size={36}/>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="px-0">
                     <form className="flex items-center gap-3" onSubmit={updateOrganization}>
                         <Input required className="bg-white dark:bg-black/40 shadow-none" value={name}
                                onChange={(e) => setName(e.target.value)}/>
@@ -116,8 +116,8 @@ function PageSettings(props) {
                     </form>
                 </CardContent>
             </Card>
-            <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                <CardHeader>
+            <Card className="border-none shadow-none">
+                <CardHeader className="px-0 pt-0">
                     <CardTitle className="text-base">
                         Members
                     </CardTitle>
@@ -126,7 +126,7 @@ function PageSettings(props) {
                         create, delete, and modify projects, and can invite or remove other members.
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="flex flex-col gap-5">
+                <CardContent className="flex flex-col gap-5 px-0">
                     <form className="flex items-center gap-3" onSubmit={addMember}>
                         <Input required type="email" className="bg-white dark:bg-black/40 shadow-none" value={email}
                                onChange={(e) => setEmail(e.target.value)}/>
@@ -162,8 +162,8 @@ function PageSettings(props) {
                 </CardContent>
             </Card>
             {profile?.user?.email === organization?.organizationOwner
-                ? <Card className="shadow-none bg-gray-100/30 dark:bg-white/5 dark:bord dark:border-gray-700/30">
-                    <CardHeader>
+                ? <Card className="border-none shadow-none">
+                <CardHeader className="px-0 pt-0">
                         <CardTitle className="text-base">
                             Danger zone
                         </CardTitle>
@@ -173,7 +173,7 @@ function PageSettings(props) {
                             its associated settings.
                         </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="px-0">
                         <Dialog onOpenChange={() => setDeleteText("")}>
                             <DialogTrigger>
                                 <Button
