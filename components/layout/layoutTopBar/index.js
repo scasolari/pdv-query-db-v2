@@ -17,31 +17,28 @@ function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, 
             setOrganizations(response.data);
         })
     }
-    const fetchDatabases = () => {
-        axios.get("/api/database").then((response) => {
-            setDatabases(response.data);
-        })
-    }
     const fetchPendingInvitation = () => {
-        axios.post(`/api/invitation`, {email: profile?.user?.email})
+        if(!profile) return null
+        axios.post(`/api/invitation`, {email: profile.user.email})
             .then((res) => {
                 setPendingInvitation(res.data);
             })
     }
     useEffect(() => {
         fetchOrganizations()
-        fetchDatabases()
         fetchPendingInvitation()
-        setProfile(session)
-    }, [session]);
+    }, []);
     if (!session) return null;
     return <div>
         <Toaster position="top-center" richColors />
         <NavigationTopBar profile={session}/>
         <div className={`${router.pathname === "/app/databases" ? "w-[1110px]" : "w-full"} px-6 lt-md:!px-4 mb-10`}>
-            <div className="mb-6 pt-3">
-                <h1 className="text-lg font-semibold ">{title}</h1>
-            </div>
+            {!title
+                ? <div className="pb-5"/>
+                : <div className="mb-6 pt-3">
+                    <h1 className="text-lg font-semibold ">{title}</h1>
+                </div>
+            }
             <div>
                 {children}
             </div>

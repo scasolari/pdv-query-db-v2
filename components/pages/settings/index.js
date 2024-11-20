@@ -91,13 +91,13 @@ function PageSettings(props) {
                 toast.success("Organization name updated successfully.");
             })
     }
-    return <LayoutTopBar title="Settings">
-        <div className="sm:w-4/12 flex flex-col gap-5">
+    return <LayoutTopBar>
+        <div className="sm:w-4/12 m-auto flex flex-col gap-5">
             <Card className="border-none shadow-none">
                 <CardHeader className="px-0 pt-0 flex flex-row items-center justify-between">
                     <div>
                         <CardTitle className="text-base">
-                            Name
+                            Workspace name
                         </CardTitle>
                         <CardDescription >
                             The name of your workspace.

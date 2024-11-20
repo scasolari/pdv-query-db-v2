@@ -25,10 +25,10 @@ import {
     DialogContent,
     DialogTrigger,
 } from "@/components/ui/dialog"
-import OrganizationAdd from "@/pages/app/organization/add";
 import {BsCheck} from "react-icons/bs";
 import {BookOpen, Database, History, Settings, SettingsIcon} from "lucide-react";
 import {useTheme} from "next-themes";
+import OrganizationAdd from "@/components/addWorkspace";
 
 
 function NavigationTopBar(props) {
@@ -69,7 +69,7 @@ function NavigationTopBar(props) {
                                             <span
                                                 className="truncate">{organization?.name || profile?.user?.name}</span>
                                             <Badge
-                                                className="rounded-full !bg-gray-200 !text-black text-xs shadow-none">Free</Badge>
+                                                className="rounded-full !bg-blue-100 !text-black text-xs shadow-none">Free</Badge>
                                         </div>
                                     </div>
                                     <BiExpandVertical/>
@@ -84,7 +84,7 @@ function NavigationTopBar(props) {
                                         <div className="flex items-center gap-2">
                                             <span className="font-[600]">{profile?.user?.name}</span>
                                             <Badge
-                                                className="rounded-full !bg-gray-200 !text-black shadow-none">Free</Badge>
+                                                className="rounded-full !bg-blue-100 !text-black shadow-none">Free</Badge>
                                         </div>
                                     </Link>
                                     {id === undefined ? <BiCheck size={18}/> : null}
@@ -92,16 +92,7 @@ function NavigationTopBar(props) {
                                 <Separator/>
                                 <div className="flex items-center justify-between m-2 p-2">
                                     <div className="text-gray-500 dark:text-muted-foreground">Workspaces</div>
-                                    <Dialog>
-                                        <DialogTrigger>
-                                            <BiPlus
-                                                className="transition duration-0 hover:duration-150 text-gray-500 dark:text-muted-foreground hover:text-black hover:cursor-pointer hover:dark:text-white"
-                                                size={18}/>
-                                        </DialogTrigger>
-                                        <DialogContent>
-                                            <OrganizationAdd/>
-                                        </DialogContent>
-                                    </Dialog>
+                                    <OrganizationAdd/>
                                 </div>
                                 <div
                                     className={`max-h-[240px] overflow-y-scroll ${organizations?.organizations?.length === 0 ? null : `py-2 pt-0`}`}>
@@ -125,6 +116,17 @@ function NavigationTopBar(props) {
                             </PopoverContent>
                         </Popover>
                     </div>
+                    {id === undefined
+                        ? null
+                        : <ul className="flex flex-row gap-5">
+                            <li>
+                                <Link href={`/app/${id}/overview`}>Overview</Link>
+                            </li>
+                            <li>
+                                <Link href={`/app/${id}/settings`}>Settings</Link>
+                            </li>
+                        </ul>
+                    }
                 </div>
                 <div className="flex items-center gap-3">
                     <div className="flex items-center">

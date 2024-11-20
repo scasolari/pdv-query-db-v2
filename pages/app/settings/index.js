@@ -10,15 +10,11 @@ import {Button} from "@/components/ui/button";
 import Link from "next/link";
 import {Input} from "@/components/ui/input";
 import {Label} from "@/components/ui/label";
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
+import {signOut} from "next-auth/react";
 
 function Settings(props) {
     const {profile, organizations, setOrganizations, setOrganization, pending_invitation, setPendingInvitation} = props
-    const [invitations, setInvitations] = useState([]);
+    const [userName, setUserName] = useState(profile?.user?.name);
     const fetchOrganizations = () => {
         axios.get("/api/organization").then((response) => {
             setOrganizations(response.data);
@@ -34,6 +30,17 @@ function Settings(props) {
                 toast.error(err.response.data.message)
             })
     }
+    const updateUserName = (e) => {
+        e.preventDefault();
+        if(!profile) return null
+        axios.post(`/api/profile/update`, {
+            id: profile?.user?.id,
+            name: userName,
+        }).then(() => {
+            signOut({callbackUrl: "/app/sanity"}).then()
+        })
+    }
+
     return <LayoutTopBar>
         <div className="sm:w-4/12 m-auto flex flex-col gap-5">
             <Card className="border-none shadow-none">
@@ -50,15 +57,19 @@ function Settings(props) {
                 </CardHeader>
                 <CardContent className="px-0">
                     <div className="flex flex-col gap-3">
-                        <div className="flex items-center gap-3">
+                        <form onSubmit={updateUserName} className="flex items-center gap-3">
                             <Input
                                 className="bg-white dark:bg-black/40 shadow-none"
-                                value={profile?.user?.name}
+                                value={userName}
+                                onChange={(e) => setUserName(e.target.value)}
                             />
                             <Button
                                 type="submit"
                                 className="bg-gray-100 hover:bg-gray-200/70 shadow-none border hover:border-gray-300 w-fit dark:bg-gray-100/10  dark:border-gray-100/10 dark:hover:bg-gray-100/15"
-                                variant="secondary">Save</Button>
+                                variant="secondary">Update</Button>
+                        </form>
+                        <div className="text-xs text-gray-500 mb-3">
+                            If you update the user name, you will be automatically sign-out from current session.
                         </div>
                         <div className="flex items-center gap-3">
                             <Label className="w-20">Email</Label>
@@ -85,9 +96,10 @@ function Settings(props) {
                     <div>
                         <p className="font-semibold">Pending invitation</p>
                         {pending_invitation?.length > 0
-                            ? <div className={`flex flex-col gap-3 mt-3`}>
+                            ? <div className={`flex flex-col mt-3`}>
                                 {pending_invitation?.map((d, i) => {
-                                    return <div key={i} className="flex items-center justify-between">
+                                    return <div key={i}
+                                                className="flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-100/10">
                                         <div className="flex items-center gap-3">
                                             <OrganizationAvatar profile={d.organizationName} size={20}/>
                                             <div className="flex items-center gap-2">
@@ -111,9 +123,9 @@ function Settings(props) {
                     <div>
                         <p className="font-semibold">Workspaces joined</p>
                         {organizations?.length > 0
-                            ? <div className={`flex flex-col gap-3 mt-3`}>
+                            ? <div className={`flex flex-col mt-3`}>
                                 {organizations?.map((d, i) => {
-                                    return <div key={i} className="flex items-center justify-between">
+                                    return <div key={i} className="flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-100/10">
                                         <div className="flex items-center gap-3">
                                             <OrganizationAvatar profile={d.name} size={20}/>
                                             <Link href={`/app/${d.id}/overview`} onClick={() => {
