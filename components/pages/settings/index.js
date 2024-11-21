@@ -92,7 +92,7 @@ function PageSettings(props) {
             })
     }
     return <LayoutTopBar>
-        <div className="sm:w-4/12 m-auto flex flex-col gap-5">
+        <div className="sm:w-[600px] w-full m-auto flex flex-col gap-5">
             <Card className="border-none shadow-none">
                 <CardHeader className="px-0 pt-0 flex flex-row items-center justify-between">
                     <div>
@@ -107,9 +107,15 @@ function PageSettings(props) {
                 </CardHeader>
                 <CardContent className="px-0">
                     <form className="flex items-center gap-3" onSubmit={updateOrganization}>
-                        <Input required className="bg-white dark:bg-black/40 shadow-none" value={name}
-                               onChange={(e) => setName(e.target.value)}/>
+                        <Input
+                            required
+                            className="bg-white dark:bg-black/40 shadow-none"
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            disabled={organization?.organizationOwner !== profile?.user?.email}
+                        />
                         <Button
+                            disabled={organization?.organizationOwner !== profile?.user?.email}
                             type="submit"
                             className="bg-gray-100 hover:bg-gray-200/70 shadow-none border hover:border-gray-300 w-fit dark:bg-gray-100/10  dark:border-gray-100/10 dark:hover:bg-gray-100/15"
                             variant="secondary">Save</Button>

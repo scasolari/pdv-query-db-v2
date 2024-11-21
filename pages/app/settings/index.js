@@ -42,7 +42,7 @@ function Settings(props) {
     }
 
     return <LayoutTopBar>
-        <div className="sm:w-4/12 m-auto flex flex-col gap-5">
+        <div className="sm:w-[600px] w-full m-auto flex flex-col gap-5">
             <Card className="border-none shadow-none">
                 <CardHeader className="px-0 pt-0 flex flex-row items-center justify-between">
                     <div>
@@ -99,7 +99,7 @@ function Settings(props) {
                             ? <div className={`flex flex-col mt-3`}>
                                 {pending_invitation?.map((d, i) => {
                                     return <div key={i}
-                                                className="flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-100/10">
+                                                className="flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-100/5">
                                         <div className="flex items-center gap-3">
                                             <OrganizationAvatar profile={d.organizationName} size={20}/>
                                             <div className="flex items-center gap-2">
@@ -125,7 +125,7 @@ function Settings(props) {
                         {organizations?.length > 0
                             ? <div className={`flex flex-col mt-3`}>
                                 {organizations?.map((d, i) => {
-                                    return <div key={i} className="flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-100/10">
+                                    return <div key={i} className="flex items-center justify-between p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-100/5">
                                         <div className="flex items-center gap-3">
                                             <OrganizationAvatar profile={d.name} size={20}/>
                                             <Link href={`/app/${d.id}/overview`} onClick={() => {
@@ -134,7 +134,7 @@ function Settings(props) {
                                                     name: d.name,
                                                     organizationOwner: d.email,
                                                 })
-                                            }} className="flex items-center gap-2 hover:underline">
+                                            }} className="flex items-center gap-2">
                                                 {d.name}
                                             </Link>
                                         </div>
