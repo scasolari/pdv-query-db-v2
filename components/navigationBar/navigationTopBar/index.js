@@ -60,19 +60,21 @@ function NavigationTopBar(props) {
                                 <Button
                                     className="border"
                                     variant="outline">
-                                    <div className="flex items-center gap-2">
-                                        {organization?.name === undefined
-                                            ? <OrganizationAvatar size={24} profile={profile?.user?.name}/>
-                                            : <OrganizationAvatar profile={organization?.name}/>
-                                        }
-                                        <div className="flex items-center gap-2">
+                                    <div className="flex items-center gap-3 min-w-[220px] max-w-[220px] justify-between">
+                                        <div className="flex items-center gap-2 truncate">
+                                            {organization?.name === undefined
+                                                ? <OrganizationAvatar size={24} profile={profile?.user?.name}/>
+                                                : <OrganizationAvatar profile={organization?.name}/>
+                                            }
                                             <span
                                                 className="truncate">{organization?.name || profile?.user?.name}</span>
+                                        </div>
+                                        <div className="flex items-center gap-2">
                                             <Badge
                                                 className="rounded-full !bg-blue-100 !text-black text-xs shadow-none">Free</Badge>
+                                            <BiExpandVertical/>
                                         </div>
                                     </div>
-                                    <BiExpandVertical/>
                                 </Button>
                             </PopoverTrigger>
                             <PopoverContent className="p-0 mt-1" side="bottom" align="start">
