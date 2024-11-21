@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     }
 
     try {
-        await prisma.$connect();
+        await db.$connect();
         const fetchDatabase = await db.organization.findMany({
             where: {
                 OR: [
@@ -46,6 +46,6 @@ export default async function handler(req, res) {
         console.error(error);
         return res.status(500).json({ message: 'Internal server error.' });
     } finally {
-        await prisma.$disconnect();
+        await db.$disconnect();
     }
 }

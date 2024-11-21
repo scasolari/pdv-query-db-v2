@@ -25,9 +25,11 @@ function LayoutTopBar({ children, profile, setProfile, title, setOrganizations, 
             })
     }
     useEffect(() => {
+        if(!session) return;
         fetchOrganizations()
         fetchPendingInvitation()
-    }, []);
+        setProfile(session)
+    }, [session]);
     if (!session) return null;
     return <div>
         <Toaster position="top-center" richColors />

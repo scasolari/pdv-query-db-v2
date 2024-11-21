@@ -8,27 +8,36 @@ import {connect} from "react-redux";
 import {useRouter} from "next/router";
 import {Dialog, DialogContent, DialogTrigger} from "@/components/ui/dialog";
 import {BiPlus} from "react-icons/bi";
+import {toast} from "sonner";
+import organization from "@/redux/reducers/organization";
 
 function OrganizationAdd(props) {
     const [open, setOpen] = useState(false);
-    const {organizations, setOrganizations, setOrganization} = props;
+    const {organizations, setOrganizations, setOrganization, organization} = props;
     const [form, setForm] = useState({
         name: ""
     })
     const router = useRouter();
     const addOrganization = (e) => {
         e.preventDefault()
-        axios.post("/api/organization/add", {form: form})
-            .then((res) => {
-                setOrganizations([...organizations, res.data]);
-                setOrganization({
-                    id: res.data.id,
-                    name: res.data.name,
-                    organizationOwner: res.data.email,
-                })
-                router.push(`/app/${res.data.id}`);
-                setOpen(false)
-            })
+        toast.promise(
+            axios.post("/api/organization/add", { form: form })
+                .then((res) => {
+                    setOrganizations([...organizations, res.data]);
+                    setOrganization({
+                        id: res.data.id,
+                        name: res.data.name,
+                        organizationOwner: res.data.email,
+                    });
+                    setOpen(false);
+                    router.push(`/app/${res.data.id}`);
+                }),
+            {
+                loading: `Adding workspace ${form.name}...`,
+                success: `Workspace ${form.name} added successfully!`,
+                error: "Failed to add workspace. Please try again.",
+            }
+        );
     }
     const resetDialog = () => {
         setOpen(!open)
@@ -82,6 +91,7 @@ function OrganizationAdd(props) {
 const mapStateToProps = (state) => {
     return {
         organizations: state.organizations.organizations,
+        organization: state.organization.organization,
     };
 };
 
